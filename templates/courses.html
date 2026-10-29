@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+
+{% block title %}
+Courses
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>
+            Course Management
+        </h1>
+
+        <p>
+            Add and manage college courses
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="row g-4">
+
+
+    <!-- ADD COURSE -->
+
+    <div class="col-lg-4">
+
+        <div class="card dashboard-card">
+
+            <div class="card-header-custom">
+
+                <h5>
+                    Add Course
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <form
+                    method="POST"
+                    action="{{ url_for('add_course') }}">
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Course Code *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="course_code"
+                            class="form-control"
+                            placeholder="BSC-CS"
+                            required>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Course Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="course_name"
+                            class="form-control"
+                            placeholder="B.Sc Computer Science"
+                            required>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Department *
+                        </label>
+
+                        <select
+                            name="department_id"
+                            class="form-select"
+                            required>
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            {% for department in departments %}
+
+                            <option
+                                value="{{ department.department_id }}">
+
+                                {{ department.department_name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Duration
+                        </label>
+
+                        <input
+                            type="text"
+                            name="duration"
+                            class="form-control"
+                            placeholder="3 Years">
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Total Semesters
+                        </label>
+
+                        <input
+                            type="number"
+                            name="total_semesters"
+                            class="form-control"
+                            min="1">
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Description
+                        </label>
+
+                        <textarea
+                            name="description"
+                            class="form-control"
+                            rows="3"></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-100">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Add Course
+
+                    </button>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COURSE LIST -->
+
+    <div class="col-lg-8">
+
+        <div class="card dashboard-card">
+
+            <div class="card-header-custom">
+
+                <h5>
+                    Course Records
+                </h5>
+
+                <span class="badge bg-primary">
+                    {{ courses|length }}
+                </span>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Code</th>
+
+                            <th>Course</th>
+
+                            <th>Department</th>
+
+                            <th>Duration</th>
+
+                            <th>Semesters</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    {% for course in courses %}
+
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    {{ course.course_code }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ course.course_name }}
+                            </td>
+
+                            <td>
+                                {{ course.department_name or "—" }}
+                            </td>
+
+                            <td>
+                                {{ course.duration or "—" }}
+                            </td>
+
+                            <td>
+                                {{ course.total_semesters or "—" }}
+                            </td>
+
+                            <td>
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'delete_course',
+                                        course_id=course.course_id
+                                    ) }}"
+                                    onsubmit="return confirm(
+                                        'Delete this course?'
+                                    );">
+
+                                    <button
+                                        class="btn btn-sm btn-danger">
+
+                                        <i
+                                            class="fa-solid fa-trash">
+                                        </i>
+
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="text-center py-5">
+
+                                No courses found.
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

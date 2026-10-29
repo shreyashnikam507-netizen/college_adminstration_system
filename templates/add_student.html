@@ -1,0 +1,498 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Student
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>
+            Add Student
+        </h1>
+
+        <p>
+            Enter complete student information
+        </p>
+
+    </div>
+
+</div>
+
+
+<form method="POST">
+
+
+<div class="card dashboard-card mb-4">
+
+    <div class="card-header-custom">
+
+        <h5>
+            Basic Information
+        </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="row g-3">
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Roll Number *
+                </label>
+
+                <input
+                    type="text"
+                    name="roll_number"
+                    class="form-control"
+                    required>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Enrollment Number
+                </label>
+
+                <input
+                    type="text"
+                    name="enrollment_number"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    ABC ID
+                </label>
+
+                <input
+                    type="text"
+                    name="abc_id"
+                    class="form-control"
+                    placeholder="Academic Bank of Credits ID">
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <label class="form-label">
+                    Student Name *
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    required>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <label class="form-label">
+                    Gender
+                </label>
+
+                <select
+                    name="gender"
+                    class="form-select">
+
+                    <option value="">
+                        Select
+                    </option>
+
+                    <option value="Male">
+                        Male
+                    </option>
+
+                    <option value="Female">
+                        Female
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <label class="form-label">
+                    Date of Birth
+                </label>
+
+                <input
+                    type="date"
+                    name="date_of_birth"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Phone
+                </label>
+
+                <input
+                    type="text"
+                    name="phone"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Semester
+                </label>
+
+                <select
+                    name="semester"
+                    class="form-select">
+
+                    <option value="">
+                        Select Semester
+                    </option>
+
+                    {% for i in range(1, 9) %}
+
+                    <option value="{{ i }}">
+                        Semester {{ i }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card dashboard-card mb-4">
+
+    <div class="card-header-custom">
+
+        <h5>
+            Academic Information
+        </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="row g-3">
+
+
+            <div class="col-md-6">
+
+                <label class="form-label">
+                    Department
+                </label>
+
+                <select
+                    name="department_id"
+                    class="form-select">
+
+                    <option value="">
+                        Select Department
+                    </option>
+
+                    {% for department in departments %}
+
+                    <option
+                        value="{{ department.department_id }}">
+
+                        {{ department.department_name }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <label class="form-label">
+                    Course
+                </label>
+
+                <select
+                    name="course_id"
+                    class="form-select">
+
+                    <option value="">
+                        Select Course
+                    </option>
+
+                    {% for course in courses %}
+
+                    <option
+                        value="{{ course.course_id }}">
+
+                        {{ course.course_name }}
+                        -
+                        {{ course.course_code }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <label class="form-label">
+                    Admission Date
+                </label>
+
+                <input
+                    type="date"
+                    name="admission_date"
+                    class="form-control">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card dashboard-card mb-4">
+
+    <div class="card-header-custom">
+
+        <h5>
+            Address Information
+        </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="row g-3">
+
+
+            <div class="col-md-12">
+
+                <label class="form-label">
+                    Address
+                </label>
+
+                <textarea
+                    name="address"
+                    class="form-control"
+                    rows="2"></textarea>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    City
+                </label>
+
+                <input
+                    type="text"
+                    name="city"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    State
+                </label>
+
+                <input
+                    type="text"
+                    name="state"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Pincode
+                </label>
+
+                <input
+                    type="text"
+                    name="pincode"
+                    class="form-control">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card dashboard-card mb-4">
+
+    <div class="card-header-custom">
+
+        <h5>
+            Guardian Information
+        </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="row g-3">
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Guardian Name
+                </label>
+
+                <input
+                    type="text"
+                    name="guardian_name"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Guardian Phone
+                </label>
+
+                <input
+                    type="text"
+                    name="guardian_phone"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Relation
+                </label>
+
+                <select
+                    name="guardian_relation"
+                    class="form-select">
+
+                    <option value="">
+                        Select Relation
+                    </option>
+
+                    <option value="Father">
+                        Father
+                    </option>
+
+                    <option value="Mother">
+                        Mother
+                    </option>
+
+                    <option value="Guardian">
+                        Guardian
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="form-actions">
+
+    <a
+        href="{{ url_for('students') }}"
+        class="btn btn-secondary">
+
+        Cancel
+
+    </a>
+
+
+    <button
+        type="submit"
+        class="btn btn-primary">
+
+        <i class="fa-solid fa-save"></i>
+
+        Save Student
+
+    </button>
+
+</div>
+
+
+</form>
+
+{% endblock %}

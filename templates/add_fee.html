@@ -1,0 +1,366 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Fee
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>
+            Add Fee Record
+        </h1>
+
+        <p>
+            Enter student fee information
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="card dashboard-card">
+
+    <div class="card-header-custom">
+
+        <h5>
+            Fee Information
+        </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        {% if students|length == 0 %}
+
+            <div class="alert alert-warning">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                No students are available.
+
+                <a
+                    href="{{ url_for('add_student') }}"
+                    class="alert-link">
+
+                    Add a student first.
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+
+            <div class="row g-4">
+
+
+                <!-- STUDENT -->
+
+                <div class="col-md-12">
+
+                    <label class="form-label">
+
+                        Select Student *
+
+                    </label>
+
+
+                    <select
+                        name="student_id"
+                        class="form-select form-select-lg"
+                        required>
+
+                        <option value="">
+
+                            -- Select Student --
+
+                        </option>
+
+
+                        {% for student in students %}
+
+                        <option
+                            value="{{ student.student_id }}">
+
+                            {{ student.name }}
+
+                            —
+                            Roll No:
+                            {{ student.roll_number }}
+
+                            {% if student.abc_id %}
+
+                                — ABC ID:
+                                {{ student.abc_id }}
+
+                            {% endif %}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+
+                    <small class="text-muted">
+
+                        {{ students|length }}
+                        student(s) available
+
+                    </small>
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Total Amount *
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            ₹
+                        </span>
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            name="total_amount"
+                            id="total_amount"
+                            class="form-control"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAID -->
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Paid Amount *
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            ₹
+                        </span>
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            name="paid_amount"
+                            id="paid_amount"
+                            class="form-control"
+                            value="0"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PENDING -->
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Pending Amount
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            ₹
+                        </span>
+
+                        <input
+                            type="text"
+                            id="pending_display"
+                            class="form-control"
+                            readonly>
+
+                    </div>
+
+                    <small class="text-muted">
+
+                        Automatically calculated
+
+                    </small>
+
+                </div>
+
+
+                <!-- DUE DATE -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Due Date
+
+                    </label>
+
+                    <input
+                        type="date"
+                        name="due_date"
+                        class="form-control">
+
+                </div>
+
+
+                <!-- PAYMENT DATE -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Payment Date
+
+                    </label>
+
+                    <input
+                        type="date"
+                        name="payment_date"
+                        class="form-control">
+
+                </div>
+
+
+                <!-- REMARKS -->
+
+                <div class="col-md-12">
+
+                    <label class="form-label">
+
+                        Remarks
+
+                    </label>
+
+                    <textarea
+                        name="remarks"
+                        class="form-control"
+                        rows="3"
+                        placeholder="Optional remarks"></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-actions mt-4">
+
+                <a
+                    href="{{ url_for('fees') }}"
+                    class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                    <i class="fa-solid fa-save"></i>
+
+                    Save Fee
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function calculatePending() {
+
+    let total =
+        parseFloat(
+            document.getElementById(
+                "total_amount"
+            ).value
+        ) || 0;
+
+
+    let paid =
+        parseFloat(
+            document.getElementById(
+                "paid_amount"
+            ).value
+        ) || 0;
+
+
+    let pending = total - paid;
+
+
+    if (pending < 0) {
+
+        pending = 0;
+
+    }
+
+
+    document.getElementById(
+        "pending_display"
+    ).value = pending.toFixed(2);
+
+}
+
+
+document
+    .getElementById("total_amount")
+    .addEventListener(
+        "input",
+        calculatePending
+    );
+
+
+document
+    .getElementById("paid_amount")
+    .addEventListener(
+        "input",
+        calculatePending
+    );
+
+
+calculatePending();
+
+</script>
+
+{% endblock %}

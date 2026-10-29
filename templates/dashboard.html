@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>
+            Dashboard
+        </h1>
+
+        <p>
+            Welcome to College Administration System
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN STATISTICS -->
+
+<div class="row g-4">
+
+
+    <!-- STUDENTS -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="stat-card">
+
+            <div class="stat-icon blue">
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Total Students
+                </span>
+
+                <h2>
+                    {{ total_students }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FACULTY -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+
+                <i class="fa-solid fa-chalkboard-user"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Total Faculty
+                </span>
+
+                <h2>
+                    {{ total_faculty }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DEPARTMENT -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+
+                <i class="fa-solid fa-building"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Departments
+                </span>
+
+                <h2>
+                    {{ total_departments }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COURSES -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+
+                <i class="fa-solid fa-book"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Courses
+                </span>
+
+                <h2>
+                    {{ total_courses }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FEE CARDS -->
+
+<div class="section-title">
+
+    <h3>
+        Fee Overview
+    </h3>
+
+</div>
+
+
+<div class="row g-4">
+
+
+    <div class="col-md-4">
+
+        <div class="money-card">
+
+            <div>
+
+                <span>
+                    Total Fees
+                </span>
+
+                <h2>
+                    ₹{{ "%.2f"|format(total_fee) }}
+                </h2>
+
+            </div>
+
+            <i class="fa-solid fa-money-bill-wave"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="money-card">
+
+            <div>
+
+                <span>
+                    Paid Fees
+                </span>
+
+                <h2>
+                    ₹{{ "%.2f"|format(paid_fee) }}
+                </h2>
+
+            </div>
+
+            <i class="fa-solid fa-circle-check"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="money-card">
+
+            <div>
+
+                <span>
+                    Pending Fees
+                </span>
+
+                <h2>
+                    ₹{{ "%.2f"|format(pending_fee) }}
+                </h2>
+
+            </div>
+
+            <i class="fa-solid fa-clock"></i>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- QUICK ACTIONS -->
+
+<div class="section-title">
+
+    <h3>
+        Quick Actions
+    </h3>
+
+</div>
+
+
+<div class="row g-3">
+
+
+    <div class="col-md-3">
+
+        <a
+            href="{{ url_for('add_student') }}"
+            class="quick-action">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+            <span>
+                Add Student
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <a
+            href="{{ url_for('add_faculty') }}"
+            class="quick-action">
+
+            <i class="fa-solid fa-chalkboard-user"></i>
+
+            <span>
+                Add Faculty
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <a
+            href="{{ url_for('departments') }}"
+            class="quick-action">
+
+            <i class="fa-solid fa-building"></i>
+
+            <span>
+                Add Department
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <a
+            href="{{ url_for('add_fee') }}"
+            class="quick-action">
+
+            <i class="fa-solid fa-money-bill"></i>
+
+            <span>
+                Add Fee
+            </span>
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

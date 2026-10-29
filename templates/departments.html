@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Departments - College Administration System</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+
+        body {
+            margin: 0;
+            background: #f4f7fb;
+            font-family: Arial, sans-serif;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 295px;
+            height: 100vh;
+            background: #111827;
+            color: white;
+            z-index: 1000;
+        }
+
+        .logo-section {
+            height: 108px;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #293244;
+        }
+
+        .logo-icon {
+            width: 54px;
+            height: 54px;
+            background: #2563eb;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            margin-right: 15px;
+        }
+
+        .logo-title {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .logo-subtitle {
+            color: #aeb7c7;
+            margin-top: 4px;
+            font-size: 15px;
+        }
+
+        .menu {
+            padding-top: 25px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            color: #e5e7eb;
+            text-decoration: none;
+            padding: 15px 35px;
+            font-size: 17px;
+        }
+
+        .menu a:hover {
+            background: #1e293b;
+            color: white;
+        }
+
+        .menu a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .menu i {
+            width: 22px;
+            text-align: center;
+        }
+
+        .logout {
+            position: absolute;
+            bottom: 20px;
+            left: 18px;
+            right: 18px;
+        }
+
+        .logout a {
+            display: block;
+            text-align: center;
+            background: #ef2727;
+            color: white;
+            text-decoration: none;
+            padding: 13px;
+            border-radius: 10px;
+        }
+
+        /* TOP BAR */
+        .topbar {
+            position: fixed;
+            left: 295px;
+            right: 0;
+            top: 0;
+            height: 75px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 35px;
+            z-index: 900;
+        }
+
+        .admin-icon {
+            width: 48px;
+            height: 48px;
+            background: #eaf1ff;
+            color: #2563eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .admin-name {
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .admin-role {
+            color: #7b8493;
+            font-size: 14px;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 295px;
+            padding: 110px 35px 40px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .page-subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+        /* CARDS */
+        .card-box {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+            border: 1px solid #edf0f5;
+            margin-bottom: 25px;
+        }
+
+        .card-header-custom {
+            padding: 20px 25px;
+            border-bottom: 1px solid #edf0f5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 19px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .card-body-custom {
+            padding: 25px;
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .form-control {
+            min-height: 45px;
+            border-radius: 8px;
+        }
+
+        .btn-add {
+            background: #2563eb;
+            border: none;
+            color: white;
+            padding: 11px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .btn-add:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        /* TABLE */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            min-width: 900px;
+        }
+
+        .table thead th {
+            background: #f1f5ff;
+            padding: 15px;
+        }
+
+        .table tbody td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+
+        .department-code {
+            background: #e8f0ff;
+            color: #2563eb;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #dc2626;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 7px;
+            text-decoration: none;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+        .empty-box {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+
+        .empty-box i {
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #cbd5e1;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <div class="logo-section">
+
+        <div class="logo-icon">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+
+        <div>
+            <div class="logo-title">
+                College Admin
+            </div>
+
+            <div class="logo-subtitle">
+                Administration System
+            </div>
+        </div>
+
+    </div>
+
+    <div class="menu">
+
+        <a href="{{ url_for('dashboard') }}">
+            <i class="fas fa-gauge"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="{{ url_for('students') }}">
+            <i class="fas fa-user-graduate"></i>
+            <span>Students</span>
+        </a>
+
+        <a href="{{ url_for('faculty') }}">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span>Faculty</span>
+        </a>
+
+        <a href="{{ url_for('departments') }}" class="active">
+            <i class="fas fa-building"></i>
+            <span>Departments</span>
+        </a>
+
+        <a href="{{ url_for('courses') }}">
+            <i class="fas fa-book"></i>
+            <span>Courses</span>
+        </a>
+
+        <a href="{{ url_for('fees') }}">
+            <i class="fas fa-money-bill-wave"></i>
+            <span>Fees</span>
+        </a>
+
+    </div>
+
+    <div class="logout">
+
+        <a href="{{ url_for('logout') }}">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+    <div class="admin-icon">
+        <i class="fas fa-user"></i>
+    </div>
+
+    <div>
+
+        <div class="admin-name">
+            {{ session.get('username', 'admin') }}
+        </div>
+
+        <div class="admin-role">
+            Administrator
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main">
+
+    <!-- FLASH MESSAGE -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="alert alert-{{ category }} alert-dismissible fade show">
+
+                    {{ message }}
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <h1 class="page-title">
+        Department Management
+    </h1>
+
+    <p class="page-subtitle">
+        Add, view and manage college departments.
+    </p>
+
+
+    <!-- ADD DEPARTMENT -->
+
+    <div class="card-box">
+
+        <div class="card-header-custom">
+
+            <h5 class="card-title">
+
+                <i class="fas fa-plus-circle text-primary"></i>
+
+                Add New Department
+
+            </h5>
+
+        </div>
+
+        <div class="card-body-custom">
+
+            <form
+                method="POST"
+                action="{{ url_for('add_department') }}">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Department Code *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="department_code"
+                            class="form-control"
+                            placeholder="Example: CS"
+                            required>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Department Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="department_name"
+                            class="form-control"
+                            placeholder="Example: Computer Science"
+                            required>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            HOD Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="hod_name"
+                            class="form-control"
+                            placeholder="Enter HOD name">
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="department@example.com">
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Phone
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            class="form-control"
+                            placeholder="Phone number">
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Description
+                        </label>
+
+                        <input
+                            type="text"
+                            name="description"
+                            class="form-control"
+                            placeholder="Department description">
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-add mt-4">
+
+                    <i class="fas fa-plus"></i>
+
+                    Add Department
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- DEPARTMENT LIST -->
+
+    <div class="card-box">
+
+        <div class="card-header-custom">
+
+            <h5 class="card-title">
+
+                <i class="fas fa-list text-primary"></i>
+
+                Department List
+
+            </h5>
+
+            <span class="badge bg-primary">
+
+                {{ departments|length }} Department(s)
+
+            </span>
+
+        </div>
+
+
+        {% if departments %}
+
+        <div class="table-container">
+
+            <table class="table table-hover mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+                        <th>Code</th>
+                        <th>Department Name</th>
+                        <th>HOD</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Description</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for department in departments %}
+
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+                        <td>
+
+                            <span class="department-code">
+
+                                {{ department.department_code }}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <strong>
+                                {{ department.department_name }}
+                            </strong>
+
+                        </td>
+
+                        <td>
+                            {{ department.hod_name or '-' }}
+                        </td>
+
+                        <td>
+                            {{ department.email or '-' }}
+                        </td>
+
+                        <td>
+                            {{ department.phone or '-' }}
+                        </td>
+
+                        <td>
+                            {{ department.description or '-' }}
+                        </td>
+
+                        <td>
+
+                            <a
+                               href="{{ url_for('delete_department', department_id=department.department_id) }}"
+                               class="delete-btn"
+                               onclick="return confirm('Are you sure you want to delete this department?');">
+
+                                <i class="fas fa-trash"></i>
+                                Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-box">
+
+            <i class="fas fa-building"></i>
+
+            <h5>No Departments Found</h5>
+
+            <p>
+                Add your first department using the form above.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>

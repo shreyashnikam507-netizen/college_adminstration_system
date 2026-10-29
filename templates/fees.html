@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+
+{% block title %}
+Fee Management
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>
+            Fee Management
+        </h1>
+
+        <p>
+            Manage student fees and pending dues
+        </p>
+
+    </div>
+
+
+    <a
+        href="{{ url_for('add_fee') }}"
+        class="btn btn-primary">
+
+        <i class="fa-solid fa-plus"></i>
+
+        Add Fee
+
+    </a>
+
+</div>
+
+
+<!-- FEE SUMMARY -->
+
+<div class="row g-4 mb-4">
+
+
+    <div class="col-md-4">
+
+        <div class="money-card">
+
+            <div>
+
+                <span>
+                    Total Fees
+                </span>
+
+                <h2>
+                    ₹{{ "%.2f"|format(total_fee) }}
+                </h2>
+
+            </div>
+
+            <i class="fa-solid fa-money-bill-wave"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="money-card">
+
+            <div>
+
+                <span>
+                    Paid
+                </span>
+
+                <h2>
+                    ₹{{ "%.2f"|format(paid_fee) }}
+                </h2>
+
+            </div>
+
+            <i class="fa-solid fa-circle-check"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="money-card">
+
+            <div>
+
+                <span>
+                    Pending
+                </span>
+
+                <h2>
+                    ₹{{ "%.2f"|format(pending_fee) }}
+                </h2>
+
+            </div>
+
+            <i class="fa-solid fa-clock"></i>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FEE RECORDS -->
+
+<div class="card dashboard-card">
+
+    <div class="card-header-custom">
+
+        <div>
+
+            <h5>
+                Fee Records
+            </h5>
+
+            <small class="text-muted">
+
+                {{ fees|length }} fee record(s)
+
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Student</th>
+
+                    <th>ABC ID</th>
+
+                    <th>Total</th>
+
+                    <th>Paid</th>
+
+                    <th>Pending</th>
+
+                    <th>Status</th>
+
+                    <th>Due Date</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for fee in fees %}
+
+                <tr>
+
+                    <td>
+                        {{ fee.fee_id }}
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+                            {{ fee.student_name }}
+                        </strong>
+
+                        <br>
+
+                        <small class="text-muted">
+
+                            Roll:
+                            {{ fee.roll_number }}
+
+                        </small>
+
+                    </td>
+
+
+                    <td>
+
+                        {% if fee.abc_id %}
+
+                            {{ fee.abc_id }}
+
+                        {% else %}
+
+                            <span class="text-muted">
+                                —
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+                        ₹{{ "%.2f"|format(fee.total_amount) }}
+                    </td>
+
+
+                    <td class="text-success">
+
+                        ₹{{ "%.2f"|format(fee.paid_amount) }}
+
+                    </td>
+
+
+                    <td class="text-danger">
+
+                        ₹{{ "%.2f"|format(fee.pending_amount) }}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if fee.payment_status == "Paid" %}
+
+                            <span class="badge bg-success">
+                                Paid
+                            </span>
+
+                        {% elif fee.payment_status == "Partial" %}
+
+                            <span class="badge bg-warning text-dark">
+                                Partial
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-danger">
+                                Pending
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+                        {{ fee.due_date or "—" }}
+                    </td>
+
+
+                    <td>
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'delete_fee',
+                                fee_id=fee.fee_id
+                            ) }}"
+                            onsubmit="return confirm(
+                                'Delete this fee record?'
+                            );">
+
+                            <button
+                                class="btn btn-sm btn-danger">
+
+                                <i
+                                    class="fa-solid fa-trash">
+                                </i>
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            {% else %}
+
+                <tr>
+
+                    <td
+                        colspan="9"
+                        class="text-center py-5">
+
+                        <i
+                            class="fa-solid fa-money-bill-wave empty-icon">
+                        </i>
+
+                        <h5>
+                            No fee records found
+                        </h5>
+
+                        <p>
+                            Add a fee record after adding students.
+                        </p>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

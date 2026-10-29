@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}
+Faculty
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>
+            Faculty Management
+        </h1>
+
+        <p>
+            View and manage faculty records
+        </p>
+
+    </div>
+
+
+    <a
+        href="{{ url_for('add_faculty') }}"
+        class="btn btn-primary">
+
+        <i class="fa-solid fa-plus"></i>
+
+        Add Faculty
+
+    </a>
+
+</div>
+
+
+<div class="card dashboard-card">
+
+    <div class="card-header-custom">
+
+        <h5>
+            Faculty Records
+        </h5>
+
+        <span class="badge bg-primary">
+            {{ faculty|length }} Faculty
+        </span>
+
+    </div>
+
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>Employee ID</th>
+
+                    <th>Name</th>
+
+                    <th>Designation</th>
+
+                    <th>Qualification</th>
+
+                    <th>Department</th>
+
+                    <th>Email</th>
+
+                    <th>Phone</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for person in faculty %}
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            {{ person.employee_id }}
+                        </strong>
+                    </td>
+
+                    <td>
+                        {{ person.name }}
+                    </td>
+
+                    <td>
+                        {{ person.designation or "—" }}
+                    </td>
+
+                    <td>
+                        {{ person.qualification or "—" }}
+                    </td>
+
+                    <td>
+                        {{ person.department_name or "—" }}
+                    </td>
+
+                    <td>
+                        {{ person.email or "—" }}
+                    </td>
+
+                    <td>
+                        {{ person.phone or "—" }}
+                    </td>
+
+                    <td>
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'delete_faculty',
+                                faculty_id=person.faculty_id
+                            ) }}"
+                            onsubmit="return confirm(
+                                'Delete this faculty member?'
+                            );">
+
+                            <button
+                                class="btn btn-sm btn-danger">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            {% else %}
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="text-center py-5">
+
+                        <i
+                            class="fa-solid fa-chalkboard-user empty-icon">
+                        </i>
+
+                        <h5>
+                            No faculty found
+                        </h5>
+
+                        <p>
+                            Add your first faculty member.
+                        </p>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

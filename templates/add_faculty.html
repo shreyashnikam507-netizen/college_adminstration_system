@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Faculty
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>
+            Add Faculty
+        </h1>
+
+        <p>
+            Enter faculty information
+        </p>
+
+    </div>
+
+</div>
+
+
+<form method="POST">
+
+
+<div class="card dashboard-card mb-4">
+
+    <div class="card-header-custom">
+
+        <h5>
+            Personal Information
+        </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="row g-3">
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Employee ID *
+                </label>
+
+                <input
+                    type="text"
+                    name="employee_id"
+                    class="form-control"
+                    required>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Name*
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    required>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Gender
+                </label>
+
+                <select
+                    name="gender"
+                    class="form-select">
+
+                    <option value="">
+                        Select
+                    </option>
+
+                    <option value="Male">
+                        Male
+                    </option>
+
+                    <option value="Female">
+                        Female
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Date of Birth
+                </label>
+
+                <input
+                    type="date"
+                    name="date_of_birth"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Phone
+                </label>
+
+                <input
+                    type="text"
+                    name="phone"
+                    class="form-control">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card dashboard-card mb-4">
+
+    <div class="card-header-custom">
+
+        <h5>
+            Professional Information
+        </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="row g-3">
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Qualification
+                </label>
+
+                <input
+                    type="text"
+                    name="qualification"
+                    class="form-control"
+                    placeholder="M.Sc, Ph.D, etc.">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Designation
+                </label>
+
+                <input
+                    type="text"
+                    name="designation"
+                    class="form-control"
+                    placeholder="Professor, Lecturer, etc.">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Department
+                </label>
+
+                <select
+                    name="department_id"
+                    class="form-select">
+
+                    <option value="">
+                        Select Department
+                    </option>
+
+                    {% for department in departments %}
+
+                    <option
+                        value="{{ department.department_id }}">
+
+                        {{ department.department_name }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Joining Date
+                </label>
+
+                <input
+                    type="date"
+                    name="joining_date"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Salary
+                </label>
+
+                <input
+                    type="number"
+                    step="0.01"
+                    name="salary"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-12">
+
+                <label class="form-label">
+                    Address
+                </label>
+
+                <textarea
+                    name="address"
+                    class="form-control"
+                    rows="2"></textarea>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="form-actions">
+
+    <a
+        href="{{ url_for('faculty') }}"
+        class="btn btn-secondary">
+
+        Cancel
+
+    </a>
+
+
+    <button
+        type="submit"
+        class="btn btn-primary">
+
+        <i class="fa-solid fa-save"></i>
+
+        Save Faculty
+
+    </button>
+
+</div>
+
+
+</form>
+
+{% endblock %}

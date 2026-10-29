@@ -1,0 +1,583 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Student
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <div class="d-flex justify-content-between
+                align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold">
+
+                <i class="fas fa-user-pen"></i>
+
+                Edit Student
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Update student information and save the changes.
+
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('students') }}"
+            class="btn btn-outline-dark">
+
+            <i class="fas fa-arrow-left"></i>
+
+            Back to Students
+
+        </a>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('edit_student', student_id=student.student_id) }}">
+
+
+        <!-- ================================================= -->
+        <!-- BASIC INFORMATION -->
+        <!-- ================================================= -->
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-primary text-white">
+
+                <h5 class="mb-0">
+
+                    <i class="fas fa-id-card"></i>
+
+                    Basic Student Information
+
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Roll Number *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="roll_number"
+                            class="form-control"
+                            value="{{ student.roll_number or '' }}"
+                            required>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Enrollment Number
+                        </label>
+
+                        <input
+                            type="text"
+                            name="enrollment_number"
+                            class="form-control"
+                            value="{{ student.enrollment_number or '' }}">
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            ABC ID
+                        </label>
+
+                        <input
+                            type="text"
+                            name="abc_id"
+                            class="form-control"
+                            value="{{ student.abc_id or '' }}">
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Student Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            class="form-control"
+                            value="{{ student.name or '' }}"
+                            required>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <label class="form-label fw-semibold">
+                            Gender
+                        </label>
+
+                        <select
+                            name="gender"
+                            class="form-select">
+
+                            <option value="">
+                                Select Gender
+                            </option>
+
+                            <option
+                                value="Male"
+                                {% if student.gender == 'Male' %}
+                                selected
+                                {% endif %}>
+
+                                Male
+
+                            </option>
+
+                            <option
+                                value="Female"
+                                {% if student.gender == 'Female' %}
+                                selected
+                                {% endif %}>
+
+                                Female
+
+                            </option>
+
+                            <option
+                                value="Other"
+                                {% if student.gender == 'Other' %}
+                                selected
+                                {% endif %}>
+
+                                Other
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <label class="form-label fw-semibold">
+                            Date of Birth
+                        </label>
+
+                        <input
+                            type="date"
+                            name="date_of_birth"
+                            class="form-control"
+                            value="{{ student.date_of_birth or '' }}">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- CONTACT INFORMATION -->
+        <!-- ================================================= -->
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-success text-white">
+
+                <h5 class="mb-0">
+
+                    <i class="fas fa-address-book"></i>
+
+                    Contact Information
+
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            value="{{ student.email or '' }}">
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Phone
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            class="form-control"
+                            value="{{ student.phone or '' }}">
+
+                    </div>
+
+
+                    <div class="col-md-12">
+
+                        <label class="form-label fw-semibold">
+                            Address
+                        </label>
+
+                        <textarea
+                            name="address"
+                            class="form-control"
+                            rows="2">{{ student.address or '' }}</textarea>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            City
+                        </label>
+
+                        <input
+                            type="text"
+                            name="city"
+                            class="form-control"
+                            value="{{ student.city or '' }}">
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            State
+                        </label>
+
+                        <input
+                            type="text"
+                            name="state"
+                            class="form-control"
+                            value="{{ student.state or '' }}">
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Pincode
+                        </label>
+
+                        <input
+                            type="text"
+                            name="pincode"
+                            class="form-control"
+                            value="{{ student.pincode or '' }}">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- GUARDIAN INFORMATION -->
+        <!-- ================================================= -->
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-warning">
+
+                <h5 class="mb-0">
+
+                    <i class="fas fa-people-roof"></i>
+
+                    Guardian Information
+
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Guardian Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="guardian_name"
+                            class="form-control"
+                            value="{{ student.guardian_name or '' }}">
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Guardian Phone
+                        </label>
+
+                        <input
+                            type="text"
+                            name="guardian_phone"
+                            class="form-control"
+                            value="{{ student.guardian_phone or '' }}">
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Relation
+                        </label>
+
+                        <input
+                            type="text"
+                            name="guardian_relation"
+                            class="form-control"
+                            value="{{ student.guardian_relation or '' }}">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ACADEMIC INFORMATION -->
+        <!-- ================================================= -->
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-info text-white">
+
+                <h5 class="mb-0">
+
+                    <i class="fas fa-graduation-cap"></i>
+
+                    Academic Information
+
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Admission Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="admission_date"
+                            class="form-control"
+                            value="{{ student.admission_date or '' }}">
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Semester
+                        </label>
+
+                        <select
+                            name="semester"
+                            class="form-select">
+
+                            <option value="">
+                                Select Semester
+                            </option>
+
+                            {% for i in range(1, 9) %}
+
+                            <option
+                                value="{{ i }}"
+                                {% if student.semester == i %}
+                                selected
+                                {% endif %}>
+
+                                Semester {{ i }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Department
+                        </label>
+
+                        <select
+                            name="department_id"
+                            class="form-select">
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            {% for department in departments %}
+
+                            <option
+                                value="{{ department.department_id }}"
+                                {% if student.department_id == department.department_id %}
+                                selected
+                                {% endif %}>
+
+                                {{ department.department_code }}
+                                -
+                                {{ department.department_name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-12">
+
+                        <label class="form-label fw-semibold">
+                            Course
+                        </label>
+
+                        <select
+                            name="course_id"
+                            class="form-select">
+
+                            <option value="">
+                                Select Course
+                            </option>
+
+                            {% for course in courses %}
+
+                            <option
+                                value="{{ course.course_id }}"
+                                {% if student.course_id == course.course_id %}
+                                selected
+                                {% endif %}>
+
+                                {{ course.course_code }}
+                                -
+                                {{ course.course_name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- BUTTONS -->
+        <!-- ================================================= -->
+
+        <div class="mb-5">
+
+            <button
+                type="submit"
+                class="btn btn-success">
+
+                <i class="fas fa-save"></i>
+
+                Update Student
+
+            </button>
+
+
+            <a
+                href="{{ url_for('students') }}"
+                class="btn btn-secondary">
+
+                <i class="fas fa-xmark"></i>
+
+                Cancel
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
